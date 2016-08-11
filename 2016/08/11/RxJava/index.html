@@ -1,0 +1,561 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="rxjava,android," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="前言最近学习了一下RxJava,在网上找各种资料,最后发现了一篇收集整理RxJava资料的文章.大家可以去看看,最后建议大家看看官方文档.之所以写这篇文章并不是说我写的要比别人好,而是自己写出来首先印象更加深刻,其次方便以后查找.就当做读后感吧.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="RxJava初体验">
+<meta property="og:url" content="http://yoursite.com/2016/08/11/RxJava/index.html">
+<meta property="og:site_name" content="木又me的博客">
+<meta property="og:description" content="前言最近学习了一下RxJava,在网上找各种资料,最后发现了一篇收集整理RxJava资料的文章.大家可以去看看,最后建议大家看看官方文档.之所以写这篇文章并不是说我写的要比别人好,而是自己写出来首先印象更加深刻,其次方便以后查找.就当做读后感吧.">
+<meta property="og:updated_time" content="2016-08-11T10:31:29.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="RxJava初体验">
+<meta name="twitter:description" content="前言最近学习了一下RxJava,在网上找各种资料,最后发现了一篇收集整理RxJava资料的文章.大家可以去看看,最后建议大家看看官方文档.之所以写这篇文章并不是说我写的要比别人好,而是自己写出来首先印象更加深刻,其次方便以后查找.就当做读后感吧.">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '博主'
+    }
+  };
+</script>
+
+  <title> RxJava初体验 | 木又me的博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">木又me的博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                RxJava初体验
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-11T11:03:16+08:00" content="2016-08-11">
+              2016-08-11
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近学习了一下RxJava,在网上找各种资料,最后发现了一篇收集整理RxJava资料的文章.<a href="https://github.com/lzyzsd/Awesome-RxJava" target="_blank" rel="external">大家可以去看看</a>,最后建议大家看看<a href="https://mcxiaoke.gitbooks.io/rxdocs/content/" target="_blank" rel="external">官方文档</a>.之所以写这篇文章并不是说我写的要比别人好,而是自己写出来首先印象更加深刻,其次方便以后查找.就当做读后感吧.<a id="more"></a></p>
+<h2 id="RxJava简介"><a href="#RxJava简介" class="headerlink" title="RxJava简介"></a>RxJava简介</h2><p>Rx来源于ReactiveX这个组织.这个组织专做各种语言的响应式编程库.专注解决异步编程问题.所以RxJava是针对Java中异步编程的一个解决方案.特点是使得代码相当简洁.写RxJava代码时让我感觉到了python的味道.写起来真的是行云流水,一气呵成.但是入门比较难.它像是一种编程思想,我们很难转变我们的思想.</p>
+<h2 id="观察者模式"><a href="#观察者模式" class="headerlink" title="观察者模式"></a>观察者模式</h2><p>RxJava用到了一个很重要的模式-观察者模式.如果已经了解观察者模式的人可以跳过本节.<br>观察者模式中有两个重要的对象.观察者(observer)和被观察的事物(observable).observable类中持有一个列表保存有所有observer对象,当被观察事物发生改变时,observable会去遍历这个列表,并且依次调用observer对象里的update方法.observer类必须实现update方法.<br>观察者模式的好处在于,观察者不用阻塞等待某件事情的完成.而是当被观察者做完某些事后,会通知观察者.所以这个设计模式非常适合异步操作.</p>
+<h2 id="RxJava的Hello-World"><a href="#RxJava的Hello-World" class="headerlink" title="RxJava的Hello World"></a>RxJava的Hello World</h2><p>学一门语言第一件事就是在控制台打印一句Hello World.这似乎已经成了一个习惯.不管你们有没有,反正我有.<br>由于RxJava是基于观察者设计模式,所以也有观察者(observer或subsriber)和被观察者(Observable).<br>我们首先创建一个Observable.</p>
+<p><pre><code><br>Observable observable = Observable.create(new Observable.OnSubscribe<string>(){<br>            @Override<br>            public void call(Subscriber&lt;? super String&gt; subscriber) {<br>                subscriber.onNext(“Hello World”);<br>                subscriber.onCompleted();<br>            }<br>        });<br></string></code></pre><br>接下来我们创建一个观察者.</p>
+<p><pre><code><br>Subscriber subscriber = new Subscriber() {<br>            @Override<br>            public void onCompleted() {<br>                Log.i(“hxq”,”onCompleted”);<br>            }<br>            @Override<br>            public void onError(Throwable e) {<br>                Log.i(“hxq”,”onError”);<br>            }<br>            @Override<br>            public void onNext(Object o) {<br>                Log.i(“hxq”,”onNext:” + o.toString());<br>            }<br>        };<br></code></pre><br>最后将两者关联起来-订阅</p>
+<p><pre><code>observable.subscribe(subscriber);</code></pre><br>当observable被订阅时会调用OnSubscribe中的call方法.在call方法里面操作完后调用onNext方法.通知subscriber.</p>
+<h2 id="RxJava中的操作符"><a href="#RxJava中的操作符" class="headerlink" title="RxJava中的操作符"></a>RxJava中的操作符</h2><p>有的人可能说了:”这代码看着也不简洁啊,和我们做异步操作一样,设置一个监听,然后回调”.那接下来我们就来简化代码.这里要引入RxJava操作符的概念,所谓的操作符也就是方法.叫操作符更贴切.RxJava中的操作符很多,这也正是RxJava强大的地方.我们甚至可以自定义操作符(不过官方不推荐这么做,很容易出现问题).这里我们会用到just操作符.<br>just的作用是将任何对象转化为Observable,所以创建observable的过程可以简化为</p>
+<p><pre><code>Observable obserable = Observable.just(“Hello World”);</code></pre><br>如果我们只在onNext里面做操作而不关心其他两个方法,我们可以在订阅时传递Action1对象,所以最终代码可以简化为:</p>
+<p><pre><code><br>    Observable.just(“Hello World”)<br>                .subscribe(new Action1<string>() {<br>                    @Override<br>                    public void call(String s) {<br>                        Log.i(“hxq”,s);<br>                    }<br>                });</string></code></pre><br>大家此时可能会有疑惑,subcribe方法不是应该传观察者对象吗?Action1又是个什么鬼?当遇到疑问时,只需要翻翻源码就知道了.这是一个重载方法.只是做了一个简单封装.</p>
+<p><pre><code><br>public final Subscription subscribe(final Action1&lt;? super T&gt; onNext) {<br>        if (onNext == null) {<br>            throw new IllegalArgumentException(“onNext can not be null”);<br>        }<br>        return subscribe(new Subscriber<t>() {<br>            @Override<br>            public final void onCompleted() {<br>                // do nothing<br>            }<br>            @Override<br>            public final void onError(Throwable e) {<br>                throw new OnErrorNotImplementedException(e);<br>            }<br>            @Override<br>            public final void onNext(T args) {<br>                onNext.call(args);<br>            }<br>        });<br>    }</t></code></pre><br>    现在是不是很简洁了.还可以更简洁,那就是引入Lamda表达式,jdk1.8已经支持Lamda表达式了.在android studio上还需要一个gradle插件-retrolambda.最终代码可以简化为:</p>
+<p><pre><code>Observable.just(“Hello World”)<br>        .subscribe(s -&gt; Log.i(“hxq”,s));</code></pre><br>这样的代码看着不得不说很舒服啊.可能有人对lamda表达式不是很理解,这里简单的解释下,-&gt;前面的是参数,后面是方法体.是函数的另一种写法.适合写内部类.<br>接下来在为大家介绍一个比较重要的操作符-map<br>map的作用是做数据转换,比如服务器给客户端的图片可能只是一个url连接,所以当我们请求到了数据后并不是我们最终需要的,我们可能还需要对他做操作,这时候就需要map.这里举一个简单的例子,将String类型转换为Integer类型.</p>
+<p><pre><code>Observable.just(“3”)<br>                .map(s -&gt; Integer.parseInt(s))<br>                .subscribe(s -&gt; Log.i(“hxq”,”Class:” + s.getClass()));</code></pre><br>RxJava中还有很多好用的操作符,这里就不一一介绍了.</p>
+<h2 id="RxJava中的线程切换"><a href="#RxJava中的线程切换" class="headerlink" title="RxJava中的线程切换"></a>RxJava中的线程切换</h2><p>RxJava中做线程切换主要靠Scheduler(调度器).Observable中的subScribeOn()和observeOn()分别用来决定Observable操作执行的线程和Subscriber操作执行的线程.</p>
+<p><pre><code><br>Observable.just(“3”)<br>                .map(s -&gt; Integer.parseInt(s))<br>                .subscribeOn(Schedulers.io())<br>                .observeOn(AndroidSchedulers.mainThread())<br>                .subscribe(s -&gt; Log.i(“hxq”,”Class:” + s.getClass()));<br></code></pre><br>代码中,数据转换的过程发生在io线程,输出内容发生在android主线程.轻松切换线程.</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/rxjava-android/" rel="tag">#rxjava,android</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/09/tablayout/" rel="next" title="使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager">
+                <i class="fa fa-chevron-left"></i> 使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="木又me" />
+          <p class="site-author-name" itemprop="name">木又me</p>
+          <p class="site-description motion-element" itemprop="description">love programing,love life</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">2</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RxJava简介"><span class="nav-number">2.</span> <span class="nav-text">RxJava简介</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#观察者模式"><span class="nav-number">3.</span> <span class="nav-text">观察者模式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RxJava的Hello-World"><span class="nav-number">4.</span> <span class="nav-text">RxJava的Hello World</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RxJava中的操作符"><span class="nav-number">5.</span> <span class="nav-text">RxJava中的操作符</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RxJava中的线程切换"><span class="nav-number">6.</span> <span class="nav-text">RxJava中的线程切换</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">木又me</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+
+</body>
+</html>
