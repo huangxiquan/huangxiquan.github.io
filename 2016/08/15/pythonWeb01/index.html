@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="python," />
 
 
 
@@ -84,15 +84,16 @@
 
 
 
-<meta name="description" content="love programing,love life">
-<meta property="og:type" content="website">
-<meta property="og:title" content="木又me的博客">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta name="description" content="前言用aiohttp搭建一个简单服务器,输出Hello World.代码不超过10行.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python-aiohttp搭建简单服务器">
+<meta property="og:url" content="http://yoursite.com/2016/08/15/pythonWeb01/index.html">
 <meta property="og:site_name" content="木又me的博客">
-<meta property="og:description" content="love programing,love life">
+<meta property="og:description" content="前言用aiohttp搭建一个简单服务器,输出Hello World.代码不超过10行.">
+<meta property="og:updated_time" content="2016-08-15T09:54:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="木又me的博客">
-<meta name="twitter:description" content="love programing,love life">
+<meta name="twitter:title" content="Python-aiohttp搭建简单服务器">
+<meta name="twitter:description" content="前言用aiohttp搭建一个简单服务器,输出Hello World.代码不超过10行.">
 
 
 
@@ -110,7 +111,7 @@
   };
 </script>
 
-  <title> 木又me的博客 </title>
+  <title> Python-aiohttp搭建简单服务器 | 木又me的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -131,9 +132,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left 
-   page-home 
- ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -210,9 +209,9 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
+
+  <div id="posts" class="posts-expand">
     
-      
 
   
   
@@ -232,10 +231,7 @@
             
             
               
-                
-                <a class="post-title-link" href="/2016/08/15/pythonWeb01/" itemprop="url">
-                  Python-aiohttp搭建简单服务器
-                </a>
+                Python-aiohttp搭建简单服务器
               
             
           </h1>
@@ -275,236 +271,69 @@
       
 
       
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>用aiohttp搭建一个简单服务器,输出Hello World.代码不超过10行.
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/15/pythonWeb01/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>用aiohttp搭建一个简单服务器,输出Hello World.代码不超过10行.<a id="more"></a></p>
+<h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><ul>
+<li>安装python3</li>
+<li>安装第三方库aiohttp<pre><code>pip3 install aiohttp</code></pre></li>
+</ul>
+<h2 id="编写代码"><a href="#编写代码" class="headerlink" title="编写代码"></a>编写代码</h2><p>总共代码不超过10行即可搭建一个简易服务器.</p>
+<p><pre><code>from aiohttp import web<br>def hello(request) :<br>        return web.Response(body=b”Hello World”)<br>app = web.Application()<br>app.router.add_route(‘GET’,’/‘,hello)<br>web.run_app(app)</code></pre><br>运行python文件,然后打开浏览器访问即可.<br>我们可以去看看,里面有简单的介绍原理.我这里也简单的说一下.</p>
+<h2 id="代码解释"><a href="#代码解释" class="headerlink" title="代码解释"></a>代码解释</h2><p>handler是一个有且只有一个Request类型的参数,并返回Response类型的函数.说简单点,handler就是处理请求的方法,接收一个请求并给出响应.类似于java中的servlet.    </p>
+<p><pre><code><br>def hello(request) :<br>        return web.Response(body=b”Hello World”)</code></pre><br>我们现在有了处理请求的方法,但是当请求被发送到服务器,服务器是怎么知道要用哪个handler处理呢?所以还需要一步,就是handler注册.我们需要将path(访问路径)和handler对应起来.</p>
+<p><pre><code>app = web.Application()<br>app.router.add_route(‘GET’,’/‘,hello)</code></pre><br>Application的生命周期是服务运行期间,所以会在路由表保存在Application里面.当有请求到来时,会根据访问路径查找路由表,然后调用对应handler.例子中的路径就是根目录.请求方式是GET.<br>最后就是将服务跑起来,没什么好解释的.<br><code>web.run_app(app)</code>    </p>
+
+      
+    </div>
+
+    <div>
+      
         
       
     </div>
 
     <div>
       
-    </div>
+        
 
-    <div>
       
     </div>
 
     <footer class="post-footer">
       
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-            
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/11/RxJava/" itemprop="url">
-                  RxJava初体验
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-11T11:03:16+08:00" content="2016-08-11">
-              2016-08-11
-            </time>
-          </span>
-
+        <div class="post-tags">
           
-
-          
-            
-          
-
-          
-
-          
-          
-
+            <a href="/tags/python/" rel="tag">#python</a>
           
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>最近学习了一下RxJava,在网上找各种资料,最后发现了一篇收集整理RxJava资料的文章.<a href="https://github.com/lzyzsd/Awesome-RxJava">大家可以去看看</a>,最后建议大家看看<a href="https://mcxiaoke.gitbooks.io/rxdocs/content/">官方文档</a>.之所以写这篇文章并不是说我写的要比别人好,而是自己写出来首先印象更加深刻,其次方便以后查找.就当做读后感吧.
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/08/11/RxJava/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/08/11/RxJava/" rel="next" title="RxJava初体验">
+                <i class="fa fa-chevron-left"></i> RxJava初体验
+              </a>
+            
           </div>
-        
-      
-    </div>
 
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
+          <div class="post-nav-prev post-nav-item">
             
-            
-              
-                
-                <a class="post-title-link" href="/2016/08/09/tablayout/" itemprop="url">
-                  使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager
-                </a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            <span class="post-meta-item-icon">
-              <i class="fa fa-calendar-o"></i>
-            </span>
-            <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-09T14:46:53+08:00" content="2016-08-09">
-              2016-08-09
-            </time>
-          </span>
-
-          
-
-          
-            
-          
-
-          
-
-          
-          
-
-          
+          </div>
         </div>
-      </header>
-    
-
-
-    <div class="post-body" itemprop="articleBody">
-
-      
       
 
       
-        
-          
-            <pre><code>TabLayout是Android Support Design中的控件之一,使用起来非常方便,但是在使用新的控件时常常会遇到问题.
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager</div></pre></td></tr></table></figure>
-<pre><code>产生这个问题的原因是项目中引用了多个版本的support包.我的项目中所引用的支持包的版本都是23.1.1,通过如下命令查看主工程的依赖关系
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gradle app:dependencies -q</div></pre></td></tr></table></figure>
-<pre><code>发现项目中所引的一个第三方库依赖的支持包是23.2.1,所以我最后将项目中支持包的版本都改为了23.2.1,问题就解决了.
-</code></pre>
-          
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
       
     </footer>
   </article>
 
 
-    
-  </section>
 
-  
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
 
           </div>
@@ -512,6 +341,10 @@
 
 
           
+  <div class="comments" id="comments">
+    
+  </div>
+
 
         </div>
         
@@ -531,8 +364,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel  sidebar-panel-active ">
+      <section class="site-overview sidebar-panel ">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.png"
@@ -575,6 +417,17 @@
 
       </section>
 
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#环境配置"><span class="nav-number">2.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编写代码"><span class="nav-number">3.</span> <span class="nav-text">编写代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码解释"><span class="nav-number">4.</span> <span class="nav-text">代码解释</span></a></li></ol></div>
+            
+          </div>
+        </section>
       
 
     </div>
@@ -671,6 +524,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
 
   
 
