@@ -84,22 +84,22 @@
 
 
 
-<meta name="description" content="TabLayout是Android Support Design中的控件之一,使用起来非常方便,但是在使用新的控件时常常会遇到问题.
-1java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager
-产生这个问题的原因是项目中引用了多个版本的support包.我的项目中所引用的支持包的版本都是23.1.1,">
+<meta name="description" content="今天遇到一个比较坑的问题,用Glide加载图片被拉伸了,找了半天才发现跟Glide设置占位图有关,如果占位图要比原图大,图片就直接被拉伸了,这个应该是Glide本身的一个bug.这个问题也是偶现的.不过去掉Glide的图片变换动画就不会有这个现象了.调用dontAnimate()方法.
+Glide.with(context)
+                .load(scaledUrl)">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager">
-<meta property="og:url" content="http://yoursite.com/2016/08/09/tablayout/index.html">
+<meta property="og:title" content="Glide 设置占位图后加载图片被拉伸">
+<meta property="og:url" content="http://yoursite.com/2016/08/23/glide-question/index.html">
 <meta property="og:site_name" content="木又me的博客">
-<meta property="og:description" content="TabLayout是Android Support Design中的控件之一,使用起来非常方便,但是在使用新的控件时常常会遇到问题.
-1java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager
-产生这个问题的原因是项目中引用了多个版本的support包.我的项目中所引用的支持包的版本都是23.1.1,">
-<meta property="og:updated_time" content="2016-08-09T07:38:20.000Z">
+<meta property="og:description" content="今天遇到一个比较坑的问题,用Glide加载图片被拉伸了,找了半天才发现跟Glide设置占位图有关,如果占位图要比原图大,图片就直接被拉伸了,这个应该是Glide本身的一个bug.这个问题也是偶现的.不过去掉Glide的图片变换动画就不会有这个现象了.调用dontAnimate()方法.
+Glide.with(context)
+                .load(scaledUrl)">
+<meta property="og:updated_time" content="2016-08-23T10:26:08.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager">
-<meta name="twitter:description" content="TabLayout是Android Support Design中的控件之一,使用起来非常方便,但是在使用新的控件时常常会遇到问题.
-1java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager
-产生这个问题的原因是项目中引用了多个版本的support包.我的项目中所引用的支持包的版本都是23.1.1,">
+<meta name="twitter:title" content="Glide 设置占位图后加载图片被拉伸">
+<meta name="twitter:description" content="今天遇到一个比较坑的问题,用Glide加载图片被拉伸了,找了半天才发现跟Glide设置占位图有关,如果占位图要比原图大,图片就直接被拉伸了,这个应该是Glide本身的一个bug.这个问题也是偶现的.不过去掉Glide的图片变换动画就不会有这个现象了.调用dontAnimate()方法.
+Glide.with(context)
+                .load(scaledUrl)">
 
 
 
@@ -117,7 +117,7 @@
   };
 </script>
 
-  <title> 使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager | 木又me的博客 </title>
+  <title> Glide 设置占位图后加载图片被拉伸 | 木又me的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -237,7 +237,7 @@
             
             
               
-                使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager
+                Glide 设置占位图后加载图片被拉伸
               
             
           </h1>
@@ -249,8 +249,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-09T14:46:53+08:00" content="2016-08-09">
-              2016-08-09
+            <time itemprop="dateCreated" datetime="2016-08-23T18:15:13+08:00" content="2016-08-23">
+              2016-08-23
             </time>
           </span>
 
@@ -264,7 +264,7 @@
 
           
           
-             <span id="/2016/08/09/tablayout/" class="leancloud_visitors" data-flag-title="使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager">
+             <span id="/2016/08/23/glide-question/" class="leancloud_visitors" data-flag-title="Glide 设置占位图后加载图片被拉伸">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -291,12 +291,15 @@
       
 
       
-        <pre><code>TabLayout是Android Support Design中的控件之一,使用起来非常方便,但是在使用新的控件时常常会遇到问题.
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager</div></pre></td></tr></table></figure>
-<pre><code>产生这个问题的原因是项目中引用了多个版本的support包.我的项目中所引用的支持包的版本都是23.1.1,通过如下命令查看主工程的依赖关系
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gradle app:dependencies -q</div></pre></td></tr></table></figure>
-<pre><code>发现项目中所引的一个第三方库依赖的支持包是23.2.1,所以我最后将项目中支持包的版本都改为了23.2.1,问题就解决了.
-</code></pre>
+        <p>今天遇到一个比较坑的问题,用Glide加载图片被拉伸了,找了半天才发现跟Glide设置占位图有关,如果占位图要比原图大,图片就直接被拉伸了,这个应该是Glide本身的一个bug.这个问题也是偶现的.不过去掉Glide的图片变换动画就不会有这个现象了.调用dontAnimate()方法.</p>
+<pre><code>Glide.with(context)
+                .load(scaledUrl)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .placeholder(R.drawable.image_loading_placeholder)
+                .dontAnimate()
+                .error(R.drawable.image_loading_placeholder)</code></pre>
+
+
       
     </div>
 
@@ -326,13 +329,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/08/15/pythonWeb01/" rel="next" title="Python-aiohttp搭建简单服务器">
+                <i class="fa fa-chevron-left"></i> Python-aiohttp搭建简单服务器
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/11/RxJava/" rel="prev" title="RxJava初体验">
-                RxJava初体验 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>

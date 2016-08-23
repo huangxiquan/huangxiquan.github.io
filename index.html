@@ -233,6 +233,116 @@
             
               
                 
+                <a class="post-title-link" href="/2016/08/23/glide-question/" itemprop="url">
+                  Glide 设置占位图后加载图片被拉伸
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-08-23T18:15:13+08:00" content="2016-08-23">
+              2016-08-23
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+          
+          
+             <span id="/2016/08/23/glide-question/" class="leancloud_visitors" data-flag-title="Glide 设置占位图后加载图片被拉伸">
+               &nbsp; | &nbsp;
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               <span class="post-meta-item-text">阅读次数 </span>
+               <span class="leancloud-visitors-count"></span>
+              </span>
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>今天遇到一个比较坑的问题,用Glide加载图片被拉伸了,找了半天才发现跟Glide设置占位图有关,如果占位图要比原图大,图片就直接被拉伸了,这个应该是Glide本身的一个bug.这个问题也是偶现的.不过去掉Glide的图片变换动画就不会有这个现象了.调用dontAnimate()方法.</p>
+<pre><code>Glide.with(context)
+                .load(scaledUrl)
+                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
+                .placeholder(R.drawable.image_loading_placeholder)
+                .dontAnimate()
+                .error(R.drawable.image_loading_placeholder)</code></pre>
+
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/08/15/pythonWeb01/" itemprop="url">
                   Python-aiohttp搭建简单服务器
                 </a>
@@ -570,7 +680,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-count">4</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
