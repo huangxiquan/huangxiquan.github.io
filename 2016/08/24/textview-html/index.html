@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="今天遇到一个比较坑的问题,用Glide加载图片被拉伸了,找了半天才发现跟Glide设置占位图有关,如果占位图要比原图大,图片就直接被拉伸了,这个应该是Glide本身的一个bug.这个问题也是偶现的.不过去掉Glide的图片变换动画就不会有这个现象了.调用dontAnimate()方法.
-Glide.with(context)
-                .load(scaledUrl)">
+<meta name="description" content="大家可能都知道webview–一个在android上支持html的控件.比较重量级的.可能有时候我们只想让我们的一个TextView支持html.这个时候就需要android原生类Html了.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Glide 设置占位图后加载图片被拉伸">
-<meta property="og:url" content="http://yoursite.com/2016/08/23/glide-question/index.html">
+<meta property="og:title" content="如何让TextView支持Html">
+<meta property="og:url" content="http://yoursite.com/2016/08/24/textview-html/index.html">
 <meta property="og:site_name" content="木又me的博客">
-<meta property="og:description" content="今天遇到一个比较坑的问题,用Glide加载图片被拉伸了,找了半天才发现跟Glide设置占位图有关,如果占位图要比原图大,图片就直接被拉伸了,这个应该是Glide本身的一个bug.这个问题也是偶现的.不过去掉Glide的图片变换动画就不会有这个现象了.调用dontAnimate()方法.
-Glide.with(context)
-                .load(scaledUrl)">
-<meta property="og:updated_time" content="2016-08-23T10:26:08.000Z">
+<meta property="og:description" content="大家可能都知道webview–一个在android上支持html的控件.比较重量级的.可能有时候我们只想让我们的一个TextView支持html.这个时候就需要android原生类Html了.">
+<meta property="og:updated_time" content="2016-08-24T03:39:43.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Glide 设置占位图后加载图片被拉伸">
-<meta name="twitter:description" content="今天遇到一个比较坑的问题,用Glide加载图片被拉伸了,找了半天才发现跟Glide设置占位图有关,如果占位图要比原图大,图片就直接被拉伸了,这个应该是Glide本身的一个bug.这个问题也是偶现的.不过去掉Glide的图片变换动画就不会有这个现象了.调用dontAnimate()方法.
-Glide.with(context)
-                .load(scaledUrl)">
+<meta name="twitter:title" content="如何让TextView支持Html">
+<meta name="twitter:description" content="大家可能都知道webview–一个在android上支持html的控件.比较重量级的.可能有时候我们只想让我们的一个TextView支持html.这个时候就需要android原生类Html了.">
 
 
 
@@ -117,7 +111,7 @@ Glide.with(context)
   };
 </script>
 
-  <title> Glide 设置占位图后加载图片被拉伸 | 木又me的博客 </title>
+  <title> 如何让TextView支持Html | 木又me的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -237,7 +231,7 @@ Glide.with(context)
             
             
               
-                Glide 设置占位图后加载图片被拉伸
+                如何让TextView支持Html
               
             
           </h1>
@@ -249,8 +243,8 @@ Glide.with(context)
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-23T18:15:13+08:00" content="2016-08-23">
-              2016-08-23
+            <time itemprop="dateCreated" datetime="2016-08-24T10:04:44+08:00" content="2016-08-24">
+              2016-08-24
             </time>
           </span>
 
@@ -264,7 +258,7 @@ Glide.with(context)
 
           
           
-             <span id="/2016/08/23/glide-question/" class="leancloud_visitors" data-flag-title="Glide 设置占位图后加载图片被拉伸">
+             <span id="/2016/08/24/textview-html/" class="leancloud_visitors" data-flag-title="如何让TextView支持Html">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -291,14 +285,13 @@ Glide.with(context)
       
 
       
-        <p>今天遇到一个比较坑的问题,用Glide加载图片被拉伸了,找了半天才发现跟Glide设置占位图有关,如果占位图要比原图大,图片就直接被拉伸了,这个应该是Glide本身的一个bug.这个问题也是偶现的.不过去掉Glide的图片变换动画就不会有这个现象了.调用dontAnimate()方法.</p>
-<pre><code>Glide.with(context)
-                .load(scaledUrl)
-                .diskCacheStrategy(DiskCacheStrategy.SOURCE)
-                .placeholder(R.drawable.image_loading_placeholder)
-                .dontAnimate()
-                .error(R.drawable.image_loading_placeholder)</code></pre>
-
+        <p>大家可能都知道webview–一个在android上支持html的控件.比较重量级的.可能有时候我们只想让我们的一个TextView支持html.这个时候就需要android原生类Html了.<a id="more"></a>调用Html.from()方法.会去解析html文本,并返回一个Spanned.但是毕竟是轻量级的,所以只对部分标签提供了支持.以下是源码:</p>
+<p><pre><code><br>    private void handleStartTag(String tag, Attributes attributes) {<br>        if (tag.equalsIgnoreCase(“br”)) {<br>            // We don’t need to handle this. TagSoup will ensure that there’s a <br> for each <br><br>            // so we can safely emite the linebreaks when we handle the close tag.<br>        } else if (tag.equalsIgnoreCase(“p”)) {<br>            handleP(mSpannableStringBuilder);<br>        } else if (tag.equalsIgnoreCase(“div”)) {<br>            handleP(mSpannableStringBuilder);<br>        } else if (tag.equalsIgnoreCase(“strong”)) {<br>            start(mSpannableStringBuilder, new Bold());<br>        } else if (tag.equalsIgnoreCase(“b”)) {<br>            start(mSpannableStringBuilder, new Bold());<br>        } else if (tag.equalsIgnoreCase(“em”)) {<br>            start(mSpannableStringBuilder, new Italic());<br>        } else if (tag.equalsIgnoreCase(“cite”)) {<br>            start(mSpannableStringBuilder, new Italic());<br>        } else if (tag.equalsIgnoreCase(“dfn”)) {<br>            start(mSpannableStringBuilder, new Italic());<br>        } else if (tag.equalsIgnoreCase(“i”)) {<br>            start(mSpannableStringBuilder, new Italic());<br>        } else if (tag.equalsIgnoreCase(“big”)) {<br>            start(mSpannableStringBuilder, new Big());<br>        } else if (tag.equalsIgnoreCase(“small”)) {<br>            start(mSpannableStringBuilder, new Small());<br>        } else if (tag.equalsIgnoreCase(“font”)) {<br>            startFont(mSpannableStringBuilder, attributes);<br>        } else if (tag.equalsIgnoreCase(“blockquote”)) {<br>            handleP(mSpannableStringBuilder);<br>            start(mSpannableStringBuilder, new Blockquote());<br>        } else if (tag.equalsIgnoreCase(“tt”)) {<br>            start(mSpannableStringBuilder, new Monospace());<br>        } else if (tag.equalsIgnoreCase(“a”)) {<br>            startA(mSpannableStringBuilder, attributes);<br>        } else if (tag.equalsIgnoreCase(“u”)) {<br>            start(mSpannableStringBuilder, new Underline());<br>        } else if (tag.equalsIgnoreCase(“sup”)) {<br>            start(mSpannableStringBuilder, new Super());<br>        } else if (tag.equalsIgnoreCase(“sub”)) {<br>            start(mSpannableStringBuilder, new Sub());<br>        } else if (tag.length() == 2 &amp;&amp;<br>                   Character.toLowerCase(tag.charAt(0)) == ‘h’ &amp;&amp;<br>                   tag.charAt(1) &gt;= ‘1’ &amp;&amp; tag.charAt(1) &lt;= ‘6’) {<br>            handleP(mSpannableStringBuilder);<br>            start(mSpannableStringBuilder, new Header(tag.charAt(1) - ‘1’));<br>        } else if (tag.equalsIgnoreCase(“img”)) {<br>            startImg(mSpannableStringBuilder, attributes, mImageGetter);<br>        } else if (mTagHandler != null) {<br>            mTagHandler.handleTag(true, tag, mSpannableStringBuilder, mReader);<br>        }<br>    }<br></code></pre><br>我们通过看源码可以看出他支持的标签是有限的.但是注意看最后一行代码,这就是扩展的关键.对于不支持的标签我们可以自己做处理,通过出入一个TagHandler对象</p>
+<p><pre><code html.fromhtml(htmlcontent,null,new="" mytaghandler());="" static="" class="" mytaghandler="" implements="" html.taghandler="" {="" @override="" public="" void="" handletag(boolean="" opening,="" string="" tag,="" editable="" output,="" xmlreader="" xmlreader)="" if("span".equals(tag))="" }="" <="" code=""></code></pre><br>我遇到的问题就是处理span标签,所以需要自己处理span标签.例如如下的一个span标签.</p>
+<p><pre><code>    &lt;span style=”color: rgb(0, 112, 192);”&gt;（DT君注：纽约目前很难找到公开招聘的网络直播这类职业&lt;/span&gt;</code></pre><br>首先我们要获取标签内的文本,这个比较容易,通过output这个参数即可以获取,其次我们要获取style属性,但是我们发现attributes这个参数并没有传递下来.最后在网上找到了一个解决办法,通过反射去获取属性值,亲测可以.上代码</p>
+<p><pre><code><br>Field elementField = xmlReader.getClass().getDeclaredField(“theNewElement”);//“theElement”固定写法<br>elementField.setAccessible(true);<br>Object element = elementField.get(xmlReader);<br>Field attsField = element.getClass().getDeclaredField(“theAtts”);//“theAtts”固定写法<br>attsField.setAccessible(true);<br>Object atts = attsField.get(element);<br>Field dataField = atts.getClass().getDeclaredField(“data”);//“data”固定写法<br>dataField.setAccessible(true);<br>String[] data = (String[])dataField.get(atts);<br>Field lengthField = atts.getClass().getDeclaredField(“length”);//“length”固定写法<br>lengthField.setAccessible(true);<br>int len = (Integer)lengthField.get(atts);<br>String attrStr = null;<br>for(int i = 0; i &lt; len; i++) {<br>    if(“style”.equals(data[i <em> 5 + 1])) {//①”style”自己的属性名<br>         attrStr = data[i </em> 5 + 4];<br>     }<br>}<br></code></pre><br>上段代码中只需要改写把①中的属性名改写为自己的属性名即可获取到属性值.我得到的结果就是:</p>
+<p><pre><code>attrStr = color: rgb(0, 112, 192)</code></pre><br>到这儿,我们已经获取到了文本及颜色值接下来就用ForegroundColorSpan给文字设置颜色</p>
+<p><pre><code>output.setSpan(new ForegroundColorSpan(color),start,end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);</code></pre><br>在这里我们用到了Span类,这个类可以改变部分字体的样式.<a href="http://blog.csdn.net/qq_16430735/article/details/50427978" target="_blank" rel="external">Android各种Span类的用法</a></p>
 
       
     </div>
@@ -329,17 +322,13 @@ Glide.with(context)
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/15/pythonWeb01/" rel="next" title="Python-aiohttp搭建简单服务器">
-                <i class="fa fa-chevron-left"></i> Python-aiohttp搭建简单服务器
+              <a href="/2016/08/23/glide-question/" rel="next" title="Glide 设置占位图后加载图片被拉伸">
+                <i class="fa fa-chevron-left"></i> Glide 设置占位图后加载图片被拉伸
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/24/textview-html/" rel="prev" title="如何让TextView支持Html">
-                如何让TextView支持Html <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
