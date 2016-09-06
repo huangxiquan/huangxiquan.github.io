@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="TabLayout是Android Support Design中的控件之一,使用起来非常方便,但是在使用新的控件时常常会遇到问题.
-1java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager
-产生这个问题的原因是项目中引用了多个版本的support包.我的项目中所引用的支持包的版本都是23.1.1,">
+<meta name="description" content="在写代码过程中,有些调试信息我们只想在debug包中看到,release包不希望这些信息被看到.这个时候一个在android studio编译时自动生成的类BuildConfig.class就派上了用场.这个类中有一个常量DEBUG.如果你打release包值就为false,debug包值就为true.但是这个规则只适用于主工程,library的BuildConfig.DEBUG一直为false,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager">
-<meta property="og:url" content="http://yoursite.com/2016/08/09/tablayout/index.html">
+<meta property="og:title" content="解决android studio Library中BuildConfing.DEBUG一直为false">
+<meta property="og:url" content="http://yoursite.com/2016/09/06/buildconfig/index.html">
 <meta property="og:site_name" content="木又me的博客">
-<meta property="og:description" content="TabLayout是Android Support Design中的控件之一,使用起来非常方便,但是在使用新的控件时常常会遇到问题.
-1java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager
-产生这个问题的原因是项目中引用了多个版本的support包.我的项目中所引用的支持包的版本都是23.1.1,">
-<meta property="og:updated_time" content="2016-08-09T07:38:20.000Z">
+<meta property="og:description" content="在写代码过程中,有些调试信息我们只想在debug包中看到,release包不希望这些信息被看到.这个时候一个在android studio编译时自动生成的类BuildConfig.class就派上了用场.这个类中有一个常量DEBUG.如果你打release包值就为false,debug包值就为true.但是这个规则只适用于主工程,library的BuildConfig.DEBUG一直为false,">
+<meta property="og:updated_time" content="2016-09-06T13:03:38.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager">
-<meta name="twitter:description" content="TabLayout是Android Support Design中的控件之一,使用起来非常方便,但是在使用新的控件时常常会遇到问题.
-1java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager
-产生这个问题的原因是项目中引用了多个版本的support包.我的项目中所引用的支持包的版本都是23.1.1,">
+<meta name="twitter:title" content="解决android studio Library中BuildConfing.DEBUG一直为false">
+<meta name="twitter:description" content="在写代码过程中,有些调试信息我们只想在debug包中看到,release包不希望这些信息被看到.这个时候一个在android studio编译时自动生成的类BuildConfig.class就派上了用场.这个类中有一个常量DEBUG.如果你打release包值就为false,debug包值就为true.但是这个规则只适用于主工程,library的BuildConfig.DEBUG一直为false,">
 
 
 
@@ -117,7 +111,7 @@
   };
 </script>
 
-  <title> 使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager | 木又me的博客 </title>
+  <title> 解决android studio Library中BuildConfing.DEBUG一直为false | 木又me的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -237,7 +231,7 @@
             
             
               
-                使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager
+                解决android studio Library中BuildConfing.DEBUG一直为false
               
             
           </h1>
@@ -249,8 +243,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-08-09T14:46:53+08:00" content="2016-08-09">
-              2016-08-09
+            <time itemprop="dateCreated" datetime="2016-09-06T20:46:00+08:00" content="2016-09-06">
+              2016-09-06
             </time>
           </span>
 
@@ -264,7 +258,7 @@
 
           
           
-             <span id="/2016/08/09/tablayout/" class="leancloud_visitors" data-flag-title="使用TabLayout 遇到java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager">
+             <span id="/2016/09/06/buildconfig/" class="leancloud_visitors" data-flag-title="解决android studio Library中BuildConfing.DEBUG一直为false">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -291,12 +285,20 @@
       
 
       
-        <pre><code>TabLayout是Android Support Design中的控件之一,使用起来非常方便,但是在使用新的控件时常常会遇到问题.
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java.lang.NoClassDefFoundError:android.support.v7.internal.widget.TintManager</div></pre></td></tr></table></figure>
-<pre><code>产生这个问题的原因是项目中引用了多个版本的support包.我的项目中所引用的支持包的版本都是23.1.1,通过如下命令查看主工程的依赖关系
-</code></pre><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">gradle app:dependencies -q</div></pre></td></tr></table></figure>
-<pre><code>发现项目中所引的一个第三方库依赖的支持包是23.2.1,所以我最后将项目中支持包的版本都改为了23.2.1,问题就解决了.
-</code></pre>
+        <p>在写代码过程中,有些调试信息我们只想在debug包中看到,release包不希望这些信息被看到.这个时候一个在android studio编译时自动生成的类BuildConfig.class就派上了用场.这个类中有一个常量DEBUG.如果你打release包值就为false,debug包值就为true.但是这个规则只适用于主工程,library的BuildConfig.DEBUG一直为false,不管你打debug包还是release包.<br>但是你只需要这样配置一下,library中的BuildConfig.class在打debug包是变为true<a id="more"></a><br>library</p>
+<pre>
+    android{
+      publishNonDefault true
+     defaultPublishConfig "debug"
+    }
+</pre>
+app(主工程)
+<pre>
+    debugCompile project(':commom')
+   releaseCompile project(':commom')
+</pre>
+
+
       
     </div>
 
@@ -326,13 +328,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2016/08/24/textview-html/" rel="next" title="如何让TextView支持Html">
+                <i class="fa fa-chevron-left"></i> 如何让TextView支持Html
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/08/11/RxJava/" rel="prev" title="RxJava初体验">
-                RxJava初体验 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
