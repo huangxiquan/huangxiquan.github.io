@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="android," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="在写代码过程中,有些调试信息我们只想在debug包中看到,release包不希望这些信息被看到.这个时候一个在android studio编译时自动生成的类BuildConfig.class就派上了用场.这个类中有一个常量DEBUG.如果你打release包值就为false,debug包值就为true.但是这个规则只适用于主工程,library的BuildConfig.DEBUG一直为false,">
+<meta name="description" content="直到2016年快结束的时候,我才发现今年又没攒到钱.要结婚还是很困难啊.2017年还得更加努力提升自己.">
 <meta property="og:type" content="article">
-<meta property="og:title" content="解决android studio Library中BuildConfing.DEBUG一直为false">
-<meta property="og:url" content="http://yoursite.com/2016/09/06/buildconfig/index.html">
+<meta property="og:title" content="2016总结">
+<meta property="og:url" content="http://yoursite.com/2017/01/03/2016-md/index.html">
 <meta property="og:site_name" content="木又me的博客">
-<meta property="og:description" content="在写代码过程中,有些调试信息我们只想在debug包中看到,release包不希望这些信息被看到.这个时候一个在android studio编译时自动生成的类BuildConfig.class就派上了用场.这个类中有一个常量DEBUG.如果你打release包值就为false,debug包值就为true.但是这个规则只适用于主工程,library的BuildConfig.DEBUG一直为false,">
-<meta property="og:updated_time" content="2016-09-06T13:03:38.000Z">
+<meta property="og:description" content="直到2016年快结束的时候,我才发现今年又没攒到钱.要结婚还是很困难啊.2017年还得更加努力提升自己.">
+<meta property="og:updated_time" content="2017-01-03T03:32:54.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="解决android studio Library中BuildConfing.DEBUG一直为false">
-<meta name="twitter:description" content="在写代码过程中,有些调试信息我们只想在debug包中看到,release包不希望这些信息被看到.这个时候一个在android studio编译时自动生成的类BuildConfig.class就派上了用场.这个类中有一个常量DEBUG.如果你打release包值就为false,debug包值就为true.但是这个规则只适用于主工程,library的BuildConfig.DEBUG一直为false,">
+<meta name="twitter:title" content="2016总结">
+<meta name="twitter:description" content="直到2016年快结束的时候,我才发现今年又没攒到钱.要结婚还是很困难啊.2017年还得更加努力提升自己.">
 
 
 
@@ -111,7 +111,7 @@
   };
 </script>
 
-  <title> 解决android studio Library中BuildConfing.DEBUG一直为false | 木又me的博客 </title>
+  <title> 2016总结 | 木又me的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -231,7 +231,7 @@
             
             
               
-                解决android studio Library中BuildConfing.DEBUG一直为false
+                2016总结
               
             
           </h1>
@@ -243,8 +243,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2016-09-06T20:46:00+08:00" content="2016-09-06">
-              2016-09-06
+            <time itemprop="dateCreated" datetime="2017-01-03T10:54:36+08:00" content="2017-01-03">
+              2017-01-03
             </time>
           </span>
 
@@ -258,7 +258,7 @@
 
           
           
-             <span id="/2016/09/06/buildconfig/" class="leancloud_visitors" data-flag-title="解决android studio Library中BuildConfing.DEBUG一直为false">
+             <span id="/2017/01/03/2016-md/" class="leancloud_visitors" data-flag-title="2016总结">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -285,19 +285,9 @@
       
 
       
-        <p>在写代码过程中,有些调试信息我们只想在debug包中看到,release包不希望这些信息被看到.这个时候一个在android studio编译时自动生成的类BuildConfig.class就派上了用场.这个类中有一个常量DEBUG.如果你打release包值就为false,debug包值就为true.但是这个规则只适用于主工程,library的BuildConfig.DEBUG一直为false,不管你打debug包还是release包.<br>但是你只需要这样配置一下,library中的BuildConfig.class在打debug包是变为true<a id="more"></a><br>library</p>
-<pre>
-    android{
-      publishNonDefault true
-     defaultPublishConfig "debug"
-    }
-</pre>
-app(主工程)
-<pre>
-    debugCompile project(':commom')
-   releaseCompile project(':commom')
-</pre>
-
+        <p>直到2016年快结束的时候,我才发现今年又没攒到钱.要结婚还是很困难啊.2017年还得更加努力提升自己.<a id="more"></a></p>
+<p>今年在工作方面从大团队跳到了小团队,从以前只做一小部分的事情,到现在做整个应用.之所以跳槽到小公司的原因还是要归结与自己学习不够主动.我学东西最快的时候就是在工作的时候,工作之外的知识我懒得去学习.下班之后很少自己去学习(可能除了工作之外的知识,学了也没什么用),都是看看电视,玩玩游戏.如果一直待在上百人开发一个应用的团队,那你接触的面自然就少,学习的东西也就很少.今年来到小团队后我发现在开发较之前开发的最大区别在于,现在要实现一个效果,我首先会网上找,看有没有现成的轮子,如果能用则直接用,不能用就改一改在用.所以现在接触了很多大大小小的框架,包括,Material Design,Retrofit,Real,Glide,rxjava,还有一些其他的开源库.有了这些框架的支持,现在我确实能快速开发一款android应用.但是我发现自己对这些框架的了解只是浮于表面,没有认真系统的去学习原理,仅仅是学习怎么应用(毕竟学习原理太累了).遇到问题就百度,百度找不到就google.有了这两步之后基本上都能解决.但是从来没有去深究原因.站在巨人的肩上开发的确很轻松,很愉快.但是能站在巨人的肩上的人太多了,如何能够脱颖而出?</p>
+<p>2017年要去系统的学习一些东西,写博客总结.花钱不要大手大脚.多攒点老婆本.</p>
 
       
     </div>
@@ -317,28 +307,18 @@ app(主工程)
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/android/" rel="tag">#android</a>
-          
-        </div>
-      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/08/24/textview-html/" rel="next" title="如何让TextView支持Html">
-                <i class="fa fa-chevron-left"></i> 如何让TextView支持Html
+              <a href="/2016/09/06/buildconfig/" rel="next" title="解决android studio Library中BuildConfing.DEBUG一直为false">
+                <i class="fa fa-chevron-left"></i> 解决android studio Library中BuildConfing.DEBUG一直为false
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/03/2016-md/" rel="prev" title="2016总结">
-                2016总结 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
