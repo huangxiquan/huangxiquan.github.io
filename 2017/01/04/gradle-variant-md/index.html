@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="android," />
 
 
 
@@ -84,16 +84,19 @@
 
 
 
-<meta name="description" content="直到2016年快结束的时候,我才发现今年又没攒到钱.要结婚还是很困难啊.2017年还得更加努力提升自己.">
+<meta name="description" content="##概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
+在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和">
 <meta property="og:type" content="article">
-<meta property="og:title" content="2016总结">
-<meta property="og:url" content="http://yoursite.com/2017/01/03/2016-md/index.html">
+<meta property="og:title" content="Gradle多样化构建">
+<meta property="og:url" content="http://yoursite.com/2017/01/04/gradle-variant-md/index.html">
 <meta property="og:site_name" content="木又me的博客">
-<meta property="og:description" content="直到2016年快结束的时候,我才发现今年又没攒到钱.要结婚还是很困难啊.2017年还得更加努力提升自己.">
-<meta property="og:updated_time" content="2017-01-03T03:32:54.000Z">
+<meta property="og:description" content="##概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
+在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和">
+<meta property="og:updated_time" content="2017-01-04T05:38:34.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="2016总结">
-<meta name="twitter:description" content="直到2016年快结束的时候,我才发现今年又没攒到钱.要结婚还是很困难啊.2017年还得更加努力提升自己.">
+<meta name="twitter:title" content="Gradle多样化构建">
+<meta name="twitter:description" content="##概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
+在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和">
 
 
 
@@ -111,7 +114,7 @@
   };
 </script>
 
-  <title> 2016总结 | 木又me的博客 </title>
+  <title> Gradle多样化构建 | 木又me的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -231,7 +234,7 @@
             
             
               
-                2016总结
+                Gradle多样化构建
               
             
           </h1>
@@ -243,8 +246,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-03T10:54:36+08:00" content="2017-01-03">
-              2017-01-03
+            <time itemprop="dateCreated" datetime="2017-01-04T10:23:07+08:00" content="2017-01-04">
+              2017-01-04
             </time>
           </span>
 
@@ -258,7 +261,7 @@
 
           
           
-             <span id="/2017/01/03/2016-md/" class="leancloud_visitors" data-flag-title="2016总结">
+             <span id="/2017/01/04/gradle-variant-md/" class="leancloud_visitors" data-flag-title="Gradle多样化构建">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -285,9 +288,81 @@
       
 
       
-        <p>直到2016年快结束的时候,我才发现今年又没攒到钱.要结婚还是很困难啊.2017年还得更加努力提升自己.<a id="more"></a></p>
-<p>今年在工作方面从大团队跳到了小团队,从以前只做一小部分的事情,到现在做整个应用.之所以跳槽到小公司的原因还是要归结与自己学习不够主动.我学东西最快的时候就是在工作的时候,工作之外的知识我懒得去学习.下班之后很少自己去学习(可能除了工作之外的知识,学了也没什么用),都是看看电视,玩玩游戏.如果一直待在上百人开发一个应用的团队,那你接触的面自然就少,学习的东西也就很少.今年来到小团队后我发现在开发较之前开发的最大区别在于,现在要实现一个效果,我首先会网上找,看有没有现成的轮子,如果能用则直接用,不能用就改一改在用.所以现在接触了很多大大小小的框架,包括,Material Design,Retrofit,Real,Glide,rxjava,还有一些其他的开源库.有了这些框架的支持,现在我确实能快速开发一款android应用.但是我发现自己对这些框架的了解只是浮于表面,没有认真系统的去学习原理,仅仅是学习怎么应用(毕竟学习原理太累了).遇到问题就百度,百度找不到就google.有了这两步之后基本上都能解决.但是从来没有去深究原因.站在巨人的肩上开发的确很轻松,很愉快.但是能站在巨人的肩上的人太多了,如何能够脱颖而出?</p>
-<p>2017年要去系统的学习一些东西,写博客总结.花钱不要大手大脚.多攒点老婆本.</p>
+        <p>##概述<br>当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.</p>
+<p>在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和product flavor(我们常说的渠道)这两个概念.</p>
+<p>##构建类型<br>构建类型是用来配置同一个渠道不同类型的构建,也就是说每一个渠道都会对应几种不同构建类型的包.最主要的应用就是打正式包和测试包.因为正式包需要去掉debugable,log,换正式服等等.当然你还可以自己定义其他的构建类型来高度的差异化.这些差异化可以通过构建类型很方便的实现.</p>
+<p>##Product Flavor<br>product flavor就是我们常说的渠道,他还用来创建应用的不同版本.我们通常用这个打不同应用市场的包,以此来统计各个市场的下载量.</p>
+<p>##Variant<br>variant是一个二维的概念.每一个variant是由Product Flavor和构建类型组成.假设我们的构建类型有debug和release两种.Product Flavor有免费版(free)和付费版(pay)两种.那么就可以构建四种不同的包</p>
+<ul>
+<li>freeDebug</li>
+<li>freeRelease</li>
+<li>payDebug</li>
+<li>payRelease</li>
+</ul>
+<p>##配置Variant<br>对于每一个Variant我们都可以做一些相应的配置以此来实现差异化.我们可以配置BuildConfig的字段,resValue以及替换manifest里面的metaData.</p>
+<pre><code>
+    buildTypes {
+        debug {
+            buildConfigField "String", "type", "\"debug\""
+            resValue "string" , "test" , "hello world debug"
+        }
+        release {
+            buildConfigField "String", "type", "\"release\""
+            minifyEnabled false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'),                     'proguard-rules.pro'
+        }
+        other.initWith(android.buildTypes.debug)
+        other {
+        }
+    }
+</code></pre>
+
+<p>我们还可以在product flavor中配置这些值.</p>
+<pre><code>
+    productFlavors {
+        free {
+            buildConfigField "String" , "type" , "\"free\""
+            resValue "string" , "test" , "hello world free"
+        }
+        pay {
+            buildConfigField "String" , "type" , "\"pay\""
+        }
+    }
+</code></pre>
+如果构建类型和渠道中存在相同的字段,那么优先使用构建类型中的字段.在上面的例子中,如果你打debug包.
+
+<pre>
+    <code>
+        BuildConfig.type = "debug";
+        R.string.text = "hello world debug";
+    </code>
+</pre>
+
+<p>替换manifest中metadata的值</p>
+<pre>
+    <code>
+        &lt;meta-data
+         android:name="UMENG_APPKEY"
+         android:value="${umeng_app_key}"/>
+
+      buildTypes {
+        debug {
+         manifestPlaceholders = [umeng_app_key: "你替代的内容"]
+        }
+        release {
+     　　manifestPlaceholders = [umeng_app_key: "你替代的内容"]
+        }
+        develop {
+    　　 manifestPlaceholders = [umeng_app_key: "你替代的内容"]
+        }
+    }
+    </code>
+</pre>
+
+<p>上述的定制只是轻量级的.如果我们要定制图片,布局等资源仅仅用上面的方法是办不到的.如果要做高度化的定制我们必须要引入一个新的概念–源集.</p>
+<p>##源集<br>源集即源代码的集合.每个Variant都会对应一个源集(需要手动创建).</p>
+<p><pre><br>    <code><br>        -app<br>        |    -src<br>        |    |    -freeDebug<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -freeRelease<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -payDebug<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -payRelease<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -main<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -MainActivity<br>    </code><br></pre><br>如上图所示,新建工程都会生成一个默认的源集目录main.如果你需要高度定制版本,就可以手动创建该版本的源集目录,然后开始定制你想要的java类或者资源文件.<br><strong>注意:主源集目录和其他版本的源集目录不能有相同的类.如果你需要定制一个java类,需要从主源集目录去掉,并在其他源集目录各新建一个.</strong></p>
 
       
     </div>
@@ -307,22 +382,24 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/android/" rel="tag">#android</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/09/06/buildconfig/" rel="next" title="解决android studio Library中BuildConfing.DEBUG一直为false">
-                <i class="fa fa-chevron-left"></i> 解决android studio Library中BuildConfing.DEBUG一直为false
+              <a href="/2017/01/03/2016-md/" rel="next" title="2016总结">
+                <i class="fa fa-chevron-left"></i> 2016总结
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/01/04/gradle-variant-md/" rel="prev" title="Gradle多样化构建">
-                Gradle多样化构建 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
