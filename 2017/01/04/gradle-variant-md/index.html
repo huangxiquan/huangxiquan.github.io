@@ -84,19 +84,19 @@
 
 
 
-<meta name="description" content="##概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
-在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和">
+<meta name="description" content="概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
+在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和pr">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Gradle多样化构建">
 <meta property="og:url" content="http://yoursite.com/2017/01/04/gradle-variant-md/index.html">
 <meta property="og:site_name" content="木又me的博客">
-<meta property="og:description" content="##概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
-在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和">
-<meta property="og:updated_time" content="2017-01-04T05:38:34.000Z">
+<meta property="og:description" content="概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
+在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和pr">
+<meta property="og:updated_time" content="2017-01-04T05:42:01.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Gradle多样化构建">
-<meta name="twitter:description" content="##概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
-在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和">
+<meta name="twitter:description" content="概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
+在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和pr">
 
 
 
@@ -288,18 +288,18 @@
       
 
       
-        <p>##概述<br>当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.</p>
-<p>在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和product flavor(我们常说的渠道)这两个概念.</p>
-<p>##构建类型<br>构建类型是用来配置同一个渠道不同类型的构建,也就是说每一个渠道都会对应几种不同构建类型的包.最主要的应用就是打正式包和测试包.因为正式包需要去掉debugable,log,换正式服等等.当然你还可以自己定义其他的构建类型来高度的差异化.这些差异化可以通过构建类型很方便的实现.</p>
-<p>##Product Flavor<br>product flavor就是我们常说的渠道,他还用来创建应用的不同版本.我们通常用这个打不同应用市场的包,以此来统计各个市场的下载量.</p>
-<p>##Variant<br>variant是一个二维的概念.每一个variant是由Product Flavor和构建类型组成.假设我们的构建类型有debug和release两种.Product Flavor有免费版(free)和付费版(pay)两种.那么就可以构建四种不同的包</p>
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.</p>
+<p>在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和product flavor(我们常说的渠道)这两个概念.<a id="more"></a></p>
+<h2 id="构建类型"><a href="#构建类型" class="headerlink" title="构建类型"></a>构建类型</h2><p>构建类型是用来配置同一个渠道不同类型的构建,也就是说每一个渠道都会对应几种不同构建类型的包.最主要的应用就是打正式包和测试包.因为正式包需要去掉debugable,log,换正式服等等.当然你还可以自己定义其他的构建类型来高度的差异化.这些差异化可以通过构建类型很方便的实现.</p>
+<h2 id="Product-Flavor"><a href="#Product-Flavor" class="headerlink" title="Product Flavor"></a>Product Flavor</h2><p>product flavor就是我们常说的渠道,他还用来创建应用的不同版本.我们通常用这个打不同应用市场的包,以此来统计各个市场的下载量.</p>
+<h2 id="Variant"><a href="#Variant" class="headerlink" title="Variant"></a>Variant</h2><p>variant是一个二维的概念.每一个variant是由Product Flavor和构建类型组成.假设我们的构建类型有debug和release两种.Product Flavor有免费版(free)和付费版(pay)两种.那么就可以构建四种不同的包</p>
 <ul>
 <li>freeDebug</li>
 <li>freeRelease</li>
 <li>payDebug</li>
 <li>payRelease</li>
 </ul>
-<p>##配置Variant<br>对于每一个Variant我们都可以做一些相应的配置以此来实现差异化.我们可以配置BuildConfig的字段,resValue以及替换manifest里面的metaData.</p>
+<h2 id="配置Variant"><a href="#配置Variant" class="headerlink" title="配置Variant"></a>配置Variant</h2><p>对于每一个Variant我们都可以做一些相应的配置以此来实现差异化.我们可以配置BuildConfig的字段,resValue以及替换manifest里面的metaData.</p>
 <pre><code>
     buildTypes {
         debug {
@@ -361,7 +361,7 @@
 </pre>
 
 <p>上述的定制只是轻量级的.如果我们要定制图片,布局等资源仅仅用上面的方法是办不到的.如果要做高度化的定制我们必须要引入一个新的概念–源集.</p>
-<p>##源集<br>源集即源代码的集合.每个Variant都会对应一个源集(需要手动创建).</p>
+<h2 id="源集"><a href="#源集" class="headerlink" title="源集"></a>源集</h2><p>源集即源代码的集合.每个Variant都会对应一个源集(需要手动创建).</p>
 <p><pre><br>    <code><br>        -app<br>        |    -src<br>        |    |    -freeDebug<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -freeRelease<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -payDebug<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -payRelease<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -main<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -MainActivity<br>    </code><br></pre><br>如上图所示,新建工程都会生成一个默认的源集目录main.如果你需要高度定制版本,就可以手动创建该版本的源集目录,然后开始定制你想要的java类或者资源文件.<br><strong>注意:主源集目录和其他版本的源集目录不能有相同的类.如果你需要定制一个java类,需要从主源集目录去掉,并在其他源集目录各新建一个.</strong></p>
 
       
@@ -506,7 +506,7 @@
               
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建类型"><span class="nav-number">2.</span> <span class="nav-text">构建类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Product-Flavor"><span class="nav-number">3.</span> <span class="nav-text">Product Flavor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Variant"><span class="nav-number">4.</span> <span class="nav-text">Variant</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Variant"><span class="nav-number">5.</span> <span class="nav-text">配置Variant</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源集"><span class="nav-number">6.</span> <span class="nav-text">源集</span></a></li></ol></div>
             
           </div>
         </section>
