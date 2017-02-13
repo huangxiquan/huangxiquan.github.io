@@ -84,19 +84,16 @@
 
 
 
-<meta name="description" content="概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
-在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和pr">
+<meta name="description" content="概述webview的加载进程虽然是在子线程，但是文字加载和图片加载是在同一线程中，如果图片很大，会严重影响文字的加载效果，影响阅读体验。所以把图片放到另一个线程中加载也是很有必要的。这样用户至少可以先看到文字，而且我们还可以对图片进行相应的处理-压缩，缓存等等。本文粘贴代码都是从真实项目中抠出来的。一些细节需要自己处理。主要讲思路。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Gradle多样化构建">
-<meta property="og:url" content="http://yoursite.com/2017/01/04/gradle-variant-md/index.html">
+<meta property="og:title" content="webview异步加载图片">
+<meta property="og:url" content="http://yoursite.com/2017/02/13/webview-async-image/index.html">
 <meta property="og:site_name" content="木又me的博客">
-<meta property="og:description" content="概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
-在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和pr">
-<meta property="og:updated_time" content="2017-01-04T05:43:15.000Z">
+<meta property="og:description" content="概述webview的加载进程虽然是在子线程，但是文字加载和图片加载是在同一线程中，如果图片很大，会严重影响文字的加载效果，影响阅读体验。所以把图片放到另一个线程中加载也是很有必要的。这样用户至少可以先看到文字，而且我们还可以对图片进行相应的处理-压缩，缓存等等。本文粘贴代码都是从真实项目中抠出来的。一些细节需要自己处理。主要讲思路。">
+<meta property="og:updated_time" content="2017-02-13T07:36:57.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Gradle多样化构建">
-<meta name="twitter:description" content="概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.
-在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和pr">
+<meta name="twitter:title" content="webview异步加载图片">
+<meta name="twitter:description" content="概述webview的加载进程虽然是在子线程，但是文字加载和图片加载是在同一线程中，如果图片很大，会严重影响文字的加载效果，影响阅读体验。所以把图片放到另一个线程中加载也是很有必要的。这样用户至少可以先看到文字，而且我们还可以对图片进行相应的处理-压缩，缓存等等。本文粘贴代码都是从真实项目中抠出来的。一些细节需要自己处理。主要讲思路。">
 
 
 
@@ -114,7 +111,7 @@
   };
 </script>
 
-  <title> Gradle多样化构建 | 木又me的博客 </title>
+  <title> webview异步加载图片 | 木又me的博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -234,7 +231,7 @@
             
             
               
-                Gradle多样化构建
+                webview异步加载图片
               
             
           </h1>
@@ -246,8 +243,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2017-01-04T10:23:07+08:00" content="2017-01-04">
-              2017-01-04
+            <time itemprop="dateCreated" datetime="2017-02-13T14:24:07+08:00" content="2017-02-13">
+              2017-02-13
             </time>
           </span>
 
@@ -261,7 +258,7 @@
 
           
           
-             <span id="/2017/01/04/gradle-variant-md/" class="leancloud_visitors" data-flag-title="Gradle多样化构建">
+             <span id="/2017/02/13/webview-async-image/" class="leancloud_visitors" data-flag-title="webview异步加载图片">
                &nbsp; | &nbsp;
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -288,81 +285,108 @@
       
 
       
-        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.</p>
-<p>在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和product flavor(我们常说的渠道)这两个概念.<a id="more"></a></p>
-<h2 id="构建类型"><a href="#构建类型" class="headerlink" title="构建类型"></a>构建类型</h2><p>构建类型是用来配置同一个渠道不同类型的构建,也就是说每一个渠道都会对应几种不同构建类型的包.最主要的应用就是打正式包和测试包.因为正式包需要去掉debugable,log,换正式服等等.当然你还可以自己定义其他的构建类型来高度的差异化.这些差异化可以通过构建类型很方便的实现.</p>
-<h2 id="Product-Flavor"><a href="#Product-Flavor" class="headerlink" title="Product Flavor"></a>Product Flavor</h2><p>product flavor就是我们常说的渠道,他还用来创建应用的不同版本.我们通常用这个打不同应用市场的包,以此来统计各个市场的下载量.</p>
-<h2 id="Variant"><a href="#Variant" class="headerlink" title="Variant"></a>Variant</h2><p>variant是一个二维的概念.每一个variant是由Product Flavor和构建类型组成.假设我们的构建类型有debug和release两种.Product Flavor有免费版(free)和付费版(pay)两种.那么就可以构建四种不同的包</p>
-<ul>
-<li>freeDebug</li>
-<li>freeRelease</li>
-<li>payDebug</li>
-<li>payRelease</li>
-</ul>
-<h2 id="配置Variant"><a href="#配置Variant" class="headerlink" title="配置Variant"></a>配置Variant</h2><p>对于每一个Variant我们都可以做一些相应的配置以此来实现差异化.我们可以配置BuildConfig的字段,resValue以及替换manifest里面的metaData.</p>
-<pre><code>
-    buildTypes {
-        debug {
-            buildConfigField "String", "type", "\"debug\""
-            resValue "string" , "test" , "hello world debug"
-        }
-        release {
-            buildConfigField "String", "type", "\"release\""
-            minifyEnabled false
-            signingConfig signingConfigs.config
-            proguardFiles getDefaultProguardFile('proguard-android.txt'),                     'proguard-rules.pro'
-        }
-        other.initWith(android.buildTypes.debug)
-        other {
-        }
-    }
+        <h2 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h2><p>webview的加载进程虽然是在子线程，但是文字加载和图片加载是在同一线程中，如果图片很大，会严重影响文字的加载效果，影响阅读体验。所以把图片放到另一个线程中加载也是很有必要的。这样用户至少可以先看到文字，而且我们还可以对图片进行相应的处理-压缩，缓存等等。本文粘贴代码都是从真实项目中抠出来的。一些细节需要自己处理。主要讲思路。<a id="more"></a></p>
+<h2 id="异步加载图片"><a href="#异步加载图片" class="headerlink" title="异步加载图片"></a>异步加载图片</h2><p>webview作为android的一个加载html的框架。如果我们要自定义图片加载就需要重写接口。我们可以通过重写WebViewClient中的方法来拦截webview请求图片。<br><code><br>public WebResourceResponse shouldInterceptRequest(WebView view, String url)</code></p>
+<p><br>我们可以看到方法有两个参数，需要一个WebResourceResponse的返回。我们重写该方法需要区别出图片的URL,然后下载图片（图片压缩，图片缓存）并将图片流封装成WebResourceResponse返回。在这里我封装了一个WebViewImageLoad这样的一个类。图片下载用的okhttp,图片缓存用的是DiskLruCache.下面是代码。<br>重写WebViewClient中的方法。该方法中主要是判断url是否是图片。（不同业务判断方式不同，大家自行判断）具体加载逻辑在WebViewImageLoad这个类中。</p>
+<pre><code>     public WebResourceResponse shouldInterceptRequest(WebView view, String url) { 
+        if(mImageUrls.contains(url)) {
+         return WebViewImageLoad.getInstance().loadImage(url);
+     }
+     return super.shouldInterceptRequest(view, url);
+ }
 </code></pre>
 
-<p>我们还可以在product flavor中配置这些值.</p>
+<p>WebViewImageLoad。这个类中主要负责下载图片，压缩图片，缓存图片，返回一个WebResourceResponse的对象，代码如下</p>
 <pre><code>
-    productFlavors {
-        free {
-            buildConfigField "String" , "type" , "\"free\""
-            resValue "string" , "test" , "hello world free"
-        }
-        pay {
-            buildConfigField "String" , "type" , "\"pay\""
-        }
+    public class WebViewImageLoad {
+    public static WebViewImageLoad sLoad;
+    private OkHttpClient mClient;
+    private static DiskLruCache mCache;
+
+    private WebViewImageLoad(){
+        mClient = new OkHttpClient();
     }
+
+    public static WebViewImageLoad getInstance() {
+        if(sLoad == null) {
+            sLoad = new WebViewImageLoad();
+
+        }
+        return sLoad;
+    }
+
+    public WebResourceResponse loadImage(String url) {
+        WebResourceResponse response = null;
+        try {
+            if(mCache == null) {
+                mCache = DiskLruCache.open(new File(BaseApp.getInstance().getCacheDir(),"webviewImage/"),1,1,1024 * 1024 * 200);
+            }
+            PipedOutputStream out = new PipedOutputStream();
+            InputStream in = new PipedInputStream(out);
+            String key = EncryptUtils.encryptMD5ToString(url).toLowerCase();
+            DiskLruCache.Snapshot snapshot = mCache.get(key);
+            if(snapshot != null) {
+                in = snapshot.getInputStream(0);
+
+            }else {
+                Request request = new Request.Builder().url(url).build();
+                Call call = mClient.newCall(request);
+                call.enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        byte[] originBytes = response.body().bytes();
+
+                        Bitmap bitmap = ImageUtils.bytes2Bitmap(originBytes);
+                        Bitmap newBitmap = ImageUtils.compressByScale(bitmap, ScreenUtils.getScreenWidth(), (int) ((ScreenUtils.getScreenWidth() * 1.0 / bitmap.getWidth()) * bitmap.getHeight()));
+                        byte[] bytes = null;
+                        if (originBytes[0] == (byte) 'G' && originBytes[1] == (byte) 'I' && originBytes[2] == (byte) 'F'){
+                            //gif图片
+                            bytes = originBytes;
+                        }else {
+                            bytes = ImageUtils.bitmap2Bytes(newBitmap, Bitmap.CompressFormat.WEBP);
+                        }
+
+                        out.write(bytes);
+                        out.close();
+                        DiskLruCache.Editor editor = mCache.edit(key);
+                        OutputStream outputStream = editor.newOutputStream(0);
+                        outputStream.write(bytes);
+                        editor.commit();
+                    }
+                });
+            }
+
+            response = new WebResourceResponse("image/png","UTF-8",in);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return response;
+    }
+
+}
 </code></pre>
-如果构建类型和渠道中存在相同的字段,那么优先使用构建类型中的字段.在上面的例子中,如果你打debug包.
 
-<pre>
-    <code>
-        BuildConfig.type = "debug";
-        R.string.text = "hello world debug";
-    </code>
-</pre>
-
-<p>替换manifest中metadata的值</p>
-<pre>
-    <code>
-        &lt;meta-data
-         android:name="UMENG_APPKEY"
-         android:value="${umeng_app_key}"/>
-
-      buildTypes {
-        debug {
-         manifestPlaceholders = [umeng_app_key: "你替代的内容"]
+<h2 id="占位图问题"><a href="#占位图问题" class="headerlink" title="占位图问题"></a>占位图问题</h2><p>图片异步加载后，必然是文字先加载完成，然后图片加载完成后重文字中间突然出来，体验不是很好所以需要给img标签加占位图。那么就需要给img设置一个宽高和一个背景图。所以我们要在加载html之前给img标签添加一些属性。这时候引入一个框架Jsoup.该框架可以很方便的解析和修改html。图片的宽高是从图片URL中解析出来的。代码如下：</p>
+<pre><code>
+    Document doc = Jsoup.parse(data);
+        Elements elements = doc.select("img");
+        for(Element element : elements) {
+            String src = element.attr("src");
+            mImageUrls.add(src);
+            int height = SizeUtils.px2dp(ImageUtils.getImageScaleHeight(getContext(),src));
+            element.attr("width","100%");
+            element.attr("height",height + "");
+            element.attr("style","background:#d8d8d8");
         }
-        release {
-     　　manifestPlaceholders = [umeng_app_key: "你替代的内容"]
-        }
-        develop {
-    　　 manifestPlaceholders = [umeng_app_key: "你替代的内容"]
-        }
-    }
-    </code>
-</pre>
+</code></pre>
 
-<p>上述的定制只是轻量级的.如果我们要定制图片,布局等资源仅仅用上面的方法是办不到的.如果要做高度化的定制我们必须要引入一个新的概念–源集.</p>
-<h2 id="源集"><a href="#源集" class="headerlink" title="源集"></a>源集</h2><p>源集即源代码的集合.每个Variant都会对应一个源集(需要手动创建).</p>
-<p><pre><br>    <code><br>        -app<br>        |    -src<br>        |    |    -freeDebug<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -freeRelease<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -payDebug<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -payRelease<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -Constants.java<br>        |    |    |    -res<br>        |    |    |    |    -layout<br>        |    |    |    |    |    -activity_main.xml<br>        |    |    -main<br>        |    |    |    -java<br>        |    |    |    |    -com.package<br>        |    |    |    |    |    -MainActivity<br>    </code><br></pre><br>如上图所示,新建工程都会生成一个默认的源集目录main.如果你需要高度定制版本,就可以手动创建该版本的源集目录,然后开始定制你想要的java类或者资源文件.<br><strong>注意:主源集目录和其他版本的源集目录不能有相同的类.如果你需要定制一个java类,需要从主源集目录去掉,并在其他源集目录各新建一个.</strong></p>
+<p>data就是html文本。此处设置的背景是颜色，也可以是图片。</p>
 
       
     </div>
@@ -393,17 +417,13 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/01/03/2016-md/" rel="next" title="2016总结">
-                <i class="fa fa-chevron-left"></i> 2016总结
+              <a href="/2017/01/04/gradle-variant-md/" rel="next" title="Gradle多样化构建">
+                <i class="fa fa-chevron-left"></i> Gradle多样化构建
               </a>
             
           </div>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/13/webview-async-image/" rel="prev" title="webview异步加载图片">
-                webview异步加载图片 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -510,7 +530,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#构建类型"><span class="nav-number">2.</span> <span class="nav-text">构建类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Product-Flavor"><span class="nav-number">3.</span> <span class="nav-text">Product Flavor</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Variant"><span class="nav-number">4.</span> <span class="nav-text">Variant</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#配置Variant"><span class="nav-number">5.</span> <span class="nav-text">配置Variant</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#源集"><span class="nav-number">6.</span> <span class="nav-text">源集</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#异步加载图片"><span class="nav-number">2.</span> <span class="nav-text">异步加载图片</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#占位图问题"><span class="nav-number">3.</span> <span class="nav-text">占位图问题</span></a></li></ol></div>
             
           </div>
         </section>
