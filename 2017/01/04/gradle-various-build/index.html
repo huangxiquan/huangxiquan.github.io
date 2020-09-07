@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 3.7.1">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"yoursite.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和pro">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Gradle多样化构建">
+<meta property="og:url" content="http://yoursite.com/2017/01/04/gradle-various-build/index.html">
+<meta property="og:site_name" content="听雨阁">
+<meta property="og:description" content="概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和pro">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2020-08-31T02:48:35.481Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Gradle多样化构建">
+<meta name="twitter:description" content="概述当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和pro">
+
+<link rel="canonical" href="http://yoursite.com/2017/01/04/gradle-various-build/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Gradle多样化构建 | 听雨阁</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">听雨阁</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+      <p class="site-subtitle" itemprop="description">静心而听雨</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/01/04/gradle-various-build/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Hush">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="听雨阁">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Gradle多样化构建
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2017-01-04 09:51:15" itemprop="dateCreated datePublished" datetime="2017-01-04T09:51:15+08:00">2017-01-04</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-08-31 10:48:35" itemprop="dateModified" datetime="2020-08-31T10:48:35+08:00">2020-08-31</time>
+              </span>
+
+          
+            <span id="/2017/01/04/gradle-various-build/" class="post-meta-item leancloud_visitors" data-flag-title="Gradle多样化构建" title="阅读次数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span class="leancloud-visitors-count"></span>
+            </span>
+            <span class="post-meta-item" title="阅读次数" id="busuanzi_container_page_pv" style="display: none;">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              <span class="post-meta-item-text">阅读次数：</span>
+              <span id="busuanzi_value_page_pv"></span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>当我们在android studio新建android工程时,就会给我们生成默认的build.gradle文件,这个文件内容已经满足大多数情况,我们不需要添加新的东西.但是如果你需要在一次构建过程中打出差异化的包,那么就需要了解grale的多样化构建.<br>在gradle中variant是用来描述某一个构建包,每一个variant都有相对应的配置.在聊variant之前,我们得先了解构建类型和product flavor(我们常说的渠道)这两个概念.<br><a id="more"></a></p>
+<h1 id="构建类型"><a href="#构建类型" class="headerlink" title="构建类型"></a>构建类型</h1><p>构建类型是用来配置同一个渠道不同类型的构建,也就是说每一个渠道都会对应几种不同构建类型的包.最主要的应用就是打正式包和测试包.因为正式包需要去掉debugable,log,换正式服等等.当然你还可以自己定义其他的构建类型来高度的差异化.这些差异化可以通过构建类型很方便的实现.</p>
+<h1 id="Product-Flavor"><a href="#Product-Flavor" class="headerlink" title="Product Flavor"></a>Product Flavor</h1><p>product flavor就是我们常说的渠道,他还用来创建应用的不同版本.我们通常用这个打不同应用市场的包,以此来统计各个市场的下载量.</p>
+<h1 id="Variant"><a href="#Variant" class="headerlink" title="Variant"></a>Variant</h1><p>variant是一个二维的概念.每一个variant是由Product Flavor和构建类型组成.假设我们的构建类型有debug和release两种.Product Flavor有免费版(free)和付费版(pay)两种.那么就可以构建四种不同的包</p>
+<ul>
+<li>freeDebug</li>
+<li>freeRelease</li>
+<li>payDebug</li>
+<li>payRelease</li>
+</ul>
+<h1 id="配置Variant"><a href="#配置Variant" class="headerlink" title="配置Variant"></a>配置Variant</h1><p>对于每一个Variant我们都可以做一些相应的配置以此来实现差异化.我们可以配置BuildConfig的字段,resValue以及替换manifest里面的metaData.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">buildTypes &#123;</span><br><span class="line">       debug &#123;</span><br><span class="line">           buildConfigField &quot;String&quot;, &quot;type&quot;, &quot;\&quot;debug\&quot;&quot;</span><br><span class="line">           resValue &quot;string&quot; , &quot;test&quot; , &quot;hello world debug&quot;</span><br><span class="line">       &#125;</span><br><span class="line">       release &#123;</span><br><span class="line">           buildConfigField &quot;String&quot;, &quot;type&quot;, &quot;\&quot;release\&quot;&quot;</span><br><span class="line">           minifyEnabled false</span><br><span class="line">           signingConfig signingConfigs.config</span><br><span class="line">           proguardFiles getDefaultProguardFile(&apos;proguard-android.txt&apos;),                     &apos;proguard-rules.pro&apos;</span><br><span class="line">       &#125;</span><br><span class="line">       other.initWith(android.buildTypes.debug)</span><br><span class="line">       other &#123;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>我们还可以在product flavor中配置这些值.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">productFlavors &#123;</span><br><span class="line">       free &#123;</span><br><span class="line">           buildConfigField &quot;String&quot; , &quot;type&quot; , &quot;\&quot;free\&quot;&quot;</span><br><span class="line">           resValue &quot;string&quot; , &quot;test&quot; , &quot;hello world free&quot;</span><br><span class="line">       &#125;</span><br><span class="line">       pay &#123;</span><br><span class="line">           buildConfigField &quot;String&quot; , &quot;type&quot; , &quot;\&quot;pay\&quot;&quot;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>如果构建类型和渠道中存在相同的字段,那么优先使用构建类型中的字段.在上面的例子中,如果你打debug包.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">BuildConfig.type = &quot;debug&quot;;</span><br><span class="line">       R.string.text = &quot;hello world debug&quot;;</span><br></pre></td></tr></table></figure>
+<p>替换manifest中metadata的值</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;meta-data</span><br><span class="line">        android:name=&quot;UMENG_APPKEY&quot;</span><br><span class="line">        android:value=&quot;$&#123;umeng_app_key&#125;&quot;/&gt;</span><br><span class="line"></span><br><span class="line">     buildTypes &#123;</span><br><span class="line">       debug &#123;</span><br><span class="line">        manifestPlaceholders = [umeng_app_key: &quot;你替代的内容&quot;]</span><br><span class="line">       &#125;</span><br><span class="line">       release &#123;</span><br><span class="line">    　　manifestPlaceholders = [umeng_app_key: &quot;你替代的内容&quot;]</span><br><span class="line">       &#125;</span><br><span class="line">       develop &#123;</span><br><span class="line">   　　 manifestPlaceholders = [umeng_app_key: &quot;你替代的内容&quot;]</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>上述的定制只是轻量级的.如果我们要定制图片,布局等资源仅仅用上面的方法是办不到的.如果要做高度化的定制我们必须要引入一个新的概念–源集.</p>
+<p>#源集<br>源集即源代码的集合.每个Variant都会对应一个源集(需要手动创建).</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">-app</span><br><span class="line">      |    -src</span><br><span class="line">      |    |    -freeDebug</span><br><span class="line">      |    |    |    -java</span><br><span class="line">      |    |    |    |    -com.package</span><br><span class="line">      |    |    |    |    |    -Constants.java</span><br><span class="line">      |    |    |    -res</span><br><span class="line">      |    |    |    |    -layout</span><br><span class="line">      |    |    |    |    |    -activity_main.xml</span><br><span class="line">      |    |    -freeRelease</span><br><span class="line">      |    |    |    -java</span><br><span class="line">      |    |    |    |    -com.package</span><br><span class="line">      |    |    |    |    |    -Constants.java</span><br><span class="line">      |    |    |    -res</span><br><span class="line">      |    |    |    |    -layout</span><br><span class="line">      |    |    |    |    |    -activity_main.xml</span><br><span class="line">      |    |    -payDebug</span><br><span class="line">      |    |    |    -java</span><br><span class="line">      |    |    |    |    -com.package</span><br><span class="line">      |    |    |    |    |    -Constants.java</span><br><span class="line">      |    |    |    -res</span><br><span class="line">      |    |    |    |    -layout</span><br><span class="line">      |    |    |    |    |    -activity_main.xml</span><br><span class="line">      |    |    -payRelease</span><br><span class="line">      |    |    |    -java</span><br><span class="line">      |    |    |    |    -com.package</span><br><span class="line">      |    |    |    |    |    -Constants.java</span><br><span class="line">      |    |    |    -res</span><br><span class="line">      |    |    |    |    -layout</span><br><span class="line">      |    |    |    |    |    -activity_main.xml</span><br><span class="line">      |    |    -main</span><br><span class="line">      |    |    |    -java</span><br><span class="line">      |    |    |    |    -com.package</span><br><span class="line">      |    |    |    |    |    -MainActivity</span><br></pre></td></tr></table></figure>
+<p>如上图所示,新建工程都会生成一个默认的源集目录main.如果你需要高度定制版本,就可以手动创建该版本的源集目录,然后开始定制你想要的java类或者资源文件.<br><strong>注意:主源集目录和其他版本的源集目录不能有相同的类.如果你需要定制一个java类,需要从主源集目录去掉,并在其他源集目录各新建一个.</strong></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item"></div>
+      <div class="post-nav-item">
+    <a href="/2017/02/13/webivew-load-image-async/" rel="next" title="webview异步加载图片">
+      webview异步加载图片 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#概述"><span class="nav-number">1.</span> <span class="nav-text">概述</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#构建类型"><span class="nav-number">2.</span> <span class="nav-text">构建类型</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Product-Flavor"><span class="nav-number">3.</span> <span class="nav-text">Product Flavor</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Variant"><span class="nav-number">4.</span> <span class="nav-text">Variant</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#配置Variant"><span class="nav-number">5.</span> <span class="nav-text">配置Variant</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Hush</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">标签</span>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Hush</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+        
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="总访客量">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="总访问量">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+
+
+
+
+
+
+<script>
+  (function() {
+    function leancloudSelector(url) {
+      url = encodeURI(url);
+      return document.getElementById(url).querySelector('.leancloud-visitors-count');
+    }
+
+    function addCount(Counter) {
+      var visitors = document.querySelector('.leancloud_visitors');
+      var url = decodeURI(visitors.id);
+      var title = visitors.dataset.flagTitle;
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          if (results.length > 0) {
+            var counter = results[0];
+            leancloudSelector(url).innerText = counter.time + 1;
+            Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
+              .catch(error => {
+                console.error('Failed to save visitor count', error);
+              });
+          } else {
+              leancloudSelector(url).innerText = 'Counter not initialized! More info at console err msg.';
+              console.error('ATTENTION! LeanCloud counter has security bug, see how to solve it here: https://github.com/theme-next/hexo-leancloud-counter-security. \n However, you can still use LeanCloud without security, by setting `security` option to `false`.');
+            
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    function showTime(Counter) {
+      var visitors = document.querySelectorAll('.leancloud_visitors');
+      var entries = [...visitors].map(element => {
+        return decodeURI(element.id);
+      });
+
+      Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url: { '$in': entries } })))
+        .then(response => response.json())
+        .then(({ results }) => {
+          for (let url of entries) {
+            let target = results.find(item => item.url === url);
+            leancloudSelector(url).innerText = target ? target.time : 0;
+          }
+        })
+        .catch(error => {
+          console.error('LeanCloud Counter Error', error);
+        });
+    }
+
+    let { app_id, app_key, server_url } = {"enable":true,"app_id":"gDrX21Ad73M3avgFjFhSAwYu-gzGzoHsz","app_key":"IiYEYcpfYCW8hNx8txQ1ii4M","server_url":null,"security":true};
+    function fetchData(api_server) {
+      var Counter = (method, url, data) => {
+        return fetch(`${api_server}/1.1${url}`, {
+          method,
+          headers: {
+            'X-LC-Id'     : app_id,
+            'X-LC-Key'    : app_key,
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(data)
+        });
+      };
+      if (CONFIG.page.isPost) {
+        if (CONFIG.hostname !== location.hostname) return;
+        addCount(Counter);
+      } else if (document.querySelectorAll('.post-title-link').length >= 1) {
+        showTime(Counter);
+      }
+    }
+
+    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+
+    if (api_server) {
+      fetchData(api_server);
+    } else {
+      fetch('https://app-router.leancloud.cn/2/route?appId=' + app_id)
+        .then(response => response.json())
+        .then(({ api_server }) => {
+          fetchData('https://' + api_server);
+        });
+    }
+  })();
+</script>
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script>
+<script src="/js/schemes/muse.js"></script>
+<script src="/js/next-boot.js"></script>
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
